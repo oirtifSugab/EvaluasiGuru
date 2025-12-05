@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Portal - Al-Hikam</title>
+    <style>
+        :root {
+            /* PALET WARNA AL-HIKAM */
+            --navy-primary: #0e2f44;    /* Biru Dongker Gelap */
+            --navy-light: #1a4a6b;      /* Biru Dongker Terang untuk Hover */
+            --gold-accent: #d4af37;     /* Kuning Emas Elegan */
+            --gold-light: #f3e5ab;      /* Emas Pucat untuk Background Info */
+            --text-dark: #333333;
+            --bg-color: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* CONTAINER UTAMA */
+        .app-container {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(14, 47, 68, 0.15);
+            overflow: hidden;
+            margin: 20px;
+            position: relative;
+        }
+
+        /* HEADER DENGAN IDENTITAS SEKOLAH */
+        .header {
+            background-color: var(--navy-primary);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--gold-accent);
+            color: white;
+        }
+
+        .school-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 0;
+            text-transform: uppercase;
+            color: var(--gold-accent);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .app-title {
+            font-size: 1rem;
+            font-weight: 400;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        /* CONTENT AREA */
+        .content {
+            padding: 30px;
+        }
+
+        /* INFO BOX */
+        .status-badge {
+            background-color: var(--gold-light);
+            color: #8a6d0b;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 25px;
+            border: 1px solid var(--gold-accent);
+            font-weight: 600;
+        }
+
+        /* FORM STYLING */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--navy-primary);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+        }
+
+        select:focus, textarea:focus {
+            border-color: var(--navy-primary);
+            background-color: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(14, 47, 68, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* TOMBOL UTAMA */
+        .btn-submit {
+            background-color: var(--navy-primary);
+            color: var(--gold-accent);
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--navy-light);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* COPYRIGHT FOOTER */
+        .footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 20px;
+            padding-bottom: 10px;
+        }
+
+        /* LAYAR SUKSES */
+        .hidden { display: none; }
+        
+        .success-view {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .check-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--navy-primary);
+            color: var(--gold-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 15px rgba(14, 47, 68, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <div id="main-view">
+        <div class="header">
+            <h1 class="school-name">SMP AL-HIKAM | SMK AL-HIKAM</h1>
+            <div class="app-title">Portal Evaluasi & Feedback Guru</div>
+        </div>
+
+        <div class="content">
+            <div class="status-badge">
+                🔒 MODE PRIVASI AKTIF<br>
+                <span style="font-weight: normal; font-size: 0.8rem;">Identitas pengirim tidak direkam (Anonymous).</span>
+            </div>
+
+            <form id="feedbackForm" onsubmit="handleFormSubmit()" target="hidden_iframe" 
+                  action="https://docs.google.com/forms/d/e/1FAIpQLSc4ESq8UzaMaDPAY9K94c3hC6XV3k5MZRJq1ZJdATGNB0eZgg/formResponse" 
+                  method="POST">
+                
+                <div class="form-group">
+                    <label>Topik Evaluasi</label>
+                    <select name="entry.435730414" required>
+                        <option value="" disabled selected>-- Pilih Kategori --</option>
+                        <option value="Kurikulum">📚 Kurikulum & Pengajaran</option>
+                        <option value="Fasilitas">🏫 Sarana & Prasarana</option>
+                        <option value="Manajemen">yw Manajemen Sekolah</option>
+                        <option value="Lingkungan">🌳 Lingkungan & Kebersihan</option>
+                        <option value="Lainnya">📝 Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Kritik / Kendala Lapangan</label>
+                    <textarea name="entry.774740013" rows="3" placeholder="Jelaskan hambatan atau masalah yang Anda temui..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Saran / Solusi Perbaikan</label>
+                    <textarea name="entry.14392977" rows="3" placeholder="Apa solusi terbaik menurut Anda?" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Kirim Laporan</button>
+            </form>
+
+            <div class="footer">
+                &copy; 2024 Sistem Informasi Manajemen Sekolah
+            </div>
+        </div>
+    </div>
+
+    <div id="success-view" class="hidden">
+        <div class="header">
+            <h1 class="school-name">SMP AL-HIKAM | SMK AL-HIKAM</h1>
+        </div>
+        <div class="content success-view">
+            <div class="check-icon">✓</div>
+            <h2 style="color: var(--navy-primary);">Laporan Diterima!</h2>
+            <p style="color: #666;">Terima kasih atas kepedulian Anda untuk kemajuan sekolah kita. Masukan Anda telah tersimpan di server sekolah.</p>
+            
+            <button class="btn-submit" onclick="resetForm()" style="margin-top: 20px;">
+                Isi Feedback Baru
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+<script>
+    let submitted = false;
+
+    function handleFormSubmit() {
+        submitted = true;
+        // Memberi jeda sedikit agar terasa proses pengirimannya
+        const btn = document.querySelector('.btn-submit');
+        btn.innerHTML = "Mengirim...";
+        btn.style.opacity = "0.7";
+        
+        setTimeout(() => {
+            document.getElementById('main-view').classList.add('hidden');
+            document.getElementById('success-view').classList.remove('hidden');
+            btn.innerHTML = "Kirim Laporan"; // Reset teks tombol
+            btn.style.opacity = "1";
+        }, 1000);
+    }
+
+    function resetForm() {
+        document.getElementById('feedbackForm').reset();
+        document.getElementById('success-view').classList.add('hidden');
+        document.getElementById('main-view').classList.remove('hidden');
+        submitted = false;
+    }
+</script>
+
+</body>
+</html>
